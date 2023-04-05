@@ -1,28 +1,21 @@
-//const {readFile, readFileSync} = require('fs')
+const express = require('express')
+
+const app = express();
+
+const {readFile} = require('fs')
+
+app.get('/', (request, response) => {
+    //request - users incoming data
+    //response - my outgoing data
+
+    readFile('./home.html', 'utf8', (err, html) => {
+        if (err){
+            response.status(500).send("sorry, out of order")
+        }
+        response.send(html)
+    })
+
+})
 
 
-// do this asap is printed last
-// const txt = readFileSync('./hello.txt', 'utf8')
-// console.log(txt)
-// console.log("DO THIS ASAP")
-
-
-//refactor above implementation with callback to make sure do this asap is printed first
-// readFile('./hello.txt', 'utf8', (err,txt2) => {
-//     console.log(txt2);
-// });
-// console.log("DO THIS ASAP")
-
-
-
-//promise based solution for file reading
-
-//prommises are async and nonblocking ... tend to produce cleaner code vs callbacks
-
-//this returns a promise when called
-const{readFile} = require('fs').promises;
-
-async function hello(){
-    const file = await readFile('./hello.txt', 'utf8');
-    
-}
+app.listen(process.env.PORT || 3000, () => console.log('App available on port 300'))
